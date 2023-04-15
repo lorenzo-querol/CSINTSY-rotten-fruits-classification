@@ -37,8 +37,36 @@ def preprocess_images(images):
 
     return np.array(preprocessed_images)
 
+def segment_shrimp(file_name: str, show: bool):
+    # lab_image = cv2.cvtColor(rgb_image, cv2.COLOR_RGB2LAB)
+    # lab_image = cv2.GaussianBlur(lab_image, (3, 3), 0)
 
+    # lower_mask = lab_image[:, :, 2] > 110
+    # upper_mask = lab_image[:, :, 2] < 255
+    # mask = upper_mask * lower_mask
 
+    # red = rgb_image[:, :, 0] * mask
+    # green = rgb_image[:, :, 1] * mask
+    # blue = rgb_image[:, :, 2] * mask
+    # final_image = np.dstack((red, green, blue))
+
+    # if show:
+    #     fig, ax = plt.subplots(1, 3, figsize=(15, 5))
+    #     ax[0].imshow(lab_image[:, :, 2])
+    #     fig.colorbar(ax[0].imshow(lab_image[:, :, 2]), ax=ax[0])
+    #     ax[0].set_title('Hue Graph', fontsize=15)
+
+    #     ax[1].imshow(mask)
+    #     ax[1].set_title('Mask', fontsize=15)
+
+    #     ax[2].imshow(final_image)
+    #     ax[2].set_title('Final Image', fontsize=15)
+
+    #     plt.tight_layout()
+    #     plt.show()
+    pass
+
+#%% 
 
 main_dir = './fruits_dataset'
 train_dir = f'{main_dir}/train'
