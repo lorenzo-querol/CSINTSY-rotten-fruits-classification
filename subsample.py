@@ -1,11 +1,16 @@
 import os
 import shutil
 import random
+from PIL import Image
 
 dataset_dir = 'fruits_dataset'
 subsampled_dir = 'subsampled_fruits_dataset'
 subsample_rate = 0.25
+jpeg_quality = 90
 
+shutil.rmtree(subsampled_dir, ignore_errors=True)
+
+# iterate over each split (train or test) in the dataset directory
 for split_name in ['train', 'test']:
     split_dir = os.path.join(dataset_dir, split_name)
     if not os.path.isdir(split_dir):
@@ -36,8 +41,11 @@ for split_name in ['train', 'test']:
         subsampled_image_filenames = random.sample(
             image_filenames, num_subsampled_images)
 
-        # copy the subsampled images to the corresponding class directory in the subsampled split directory
         for filename in subsampled_image_filenames:
             src_path = os.path.join(class_dir, filename)
             dst_path = os.path.join(subsampled_class_dir, filename)
-            shutil.copyfile(src_path, dst_path)
+            with Image.open(src_path) as img:
+                # convert RGBA to RGB
+                if img.mode == 'RGBA':
+                    img = img.convert('RGB')
+                img.save(dst_path, 'JPEG', quality=jpeg_quality)
