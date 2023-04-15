@@ -18,7 +18,6 @@ def segment_image(image):
     ret, thresh = cv2.threshold(
         blur_image, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
-
     # Apply mask on image
     masked_image = cv2.bitwise_and(rgb_image, thresh)
 
