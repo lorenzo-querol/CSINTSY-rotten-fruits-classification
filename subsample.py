@@ -7,6 +7,7 @@ dataset_dir = 'fruits_dataset'
 subsampled_dir = 'subsampled_fruits_dataset'
 subsample_rate = 0.25
 jpeg_quality = 90
+target_size = (224, 224)
 
 shutil.rmtree(subsampled_dir, ignore_errors=True)
 
@@ -41,11 +42,21 @@ for split_name in ['train', 'test']:
         subsampled_image_filenames = random.sample(
             image_filenames, num_subsampled_images)
 
+        # copy, resize, and convert the subsampled images to the corresponding class directory in the subsampled split directory
         for filename in subsampled_image_filenames:
             src_path = os.path.join(class_dir, filename)
+
+            # remove file extension
+            filename = os.path.splitext(filename)[0]
+            filename = filename + '.jpg'
             dst_path = os.path.join(subsampled_class_dir, filename)
             with Image.open(src_path) as img:
+                # resize the image
+                img = img.resize(target_size, resample=Image.BILINEAR)
+
                 # convert RGBA to RGB
                 if img.mode == 'RGBA':
                     img = img.convert('RGB')
+
+                # save the image as JPEG
                 img.save(dst_path, 'JPEG', quality=jpeg_quality)
